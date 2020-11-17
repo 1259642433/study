@@ -51,12 +51,57 @@
 //    module.exports = loadUsers
 
 function loadUsers(userIds, load, done) {
-    console.log(999999)
-    // var users = []
-    // for (var i = 0; i < userIds.length; i++) {
-    //     users.push(load(userIds[i]))
-    // }
-
-    // return users
+    var completed = 0
+    var users = []
+    userIds.map((item,index) => {
+    load(item,function(user){
+        users[index] = user
+        if (++completed === userIds.length) return done(users)
+    })
+});
 }
+
 module.exports = loadUsers
+
+
+// 运行结果
+// λ functional-javascript verify 15_AsyncLoops.js
+// [
+//   { id: 430, name: 'Mollit Duis' },
+//   { id: 770, name: 'Ipsum Lorem' },
+//   { id: 385, name: 'Voluptate Sunt' },
+//   { id: 22, name: 'Eu Non' },
+//   { id: 941, name: 'Nostrud Eiusmod' },
+//   { id: 340, name: 'Cillum Et' },
+//   { id: 338, name: 'Sint Eu' },
+//   { id: 534, name: 'Sit Ullamco' },
+//   { id: 127, name: 'Magna In' },
+//   { id: 746, name: 'Veniam Mollit' }
+// ]
+// All 10 users loaded!
+
+// # PASS
+
+// Your solution to Async Loops passed!
+
+// Here's the official solution in case you want to compare notes:
+
+// ────────────────────────────────────────────────────────────────────────────────
+//     function loadUsers(userIds, load, done) {
+//       var completed = 0
+//       var users = []
+//       userIds.forEach(function(id, index) {
+//         load(id, function(user) {
+//           users[index] = user
+//           if (++completed === userIds.length) return done(users)
+//         })
+//       })
+//     }
+
+//     module.exports = loadUsers
+
+
+// ────────────────────────────────────────────────────────────────────────────────
+
+// You have 12 challenges left.
+// Type 'functional-javascript' to show the menu.
