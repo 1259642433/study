@@ -69,18 +69,40 @@
 
 function curryN(fn, n) {
     if (!n) n = fn.length
-    return function (val) {
-        fn.arguments.push(val)
-        return curryN(fn,n-1)
+    return function curryR(val) {
+        if(n==1) return fn(val)
+        return curryN(fn.bind(this,val),n-1)
     }
 }
 
-function add(a,b,c){
-    return a+b+c
-}
-
-const curry = curryN(add)
-console.log(curry(2))
-
-
 module.exports = curryN
+
+//运行结果
+// submission: [
+//     'Testing curryN without n:', 'curryA(3) => 6', 'curryA(10) => 13', 'curryN(add3)(1)(2)(3) => 6', '1,2,3,4', 'Testing we can change the inner function to 
+//   generate different set of outputs:', '1,6,3,5', 'Testing curryN with n:', "curryN(strConcat, 5)('This')('problem')('has')('been')('solved')) => This problem has been solved"
+//   ]
+//   solution:   [
+//     'Testing curryN without n:', 'curryA(3) => 6', 'curryA(10) => 13', 'curryN(add3)(1)(2)(3) => 6', '1,2,3,4', 'Testing we can change the inner function to 
+//   generate different set of outputs:', '1,6,3,5', 'Testing curryN with n:', "curryN(strConcat, 5)('This')('problem')('has')('been')('solved')) => This problem has been solved"
+//   ]
+  
+//   # PASS
+  
+//   Your solution to Currying passed!
+  
+//   Here's the official solution in case you want to compare notes:
+  
+//   ────────────────────────────────────────────────────────────────────────────────
+//       function curryN(fn, n) {
+//         n = n || fn.length
+//         return function curriedN(arg) {
+//           if (n <= 1) return fn(arg)
+//           return curryN(fn.bind(this, arg), n - 1)
+//         }
+//       }
+  
+//       module.exports = curryN
+  
+  
+//   ────────────────────────────────────────────────────────────────────────────────
